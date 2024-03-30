@@ -26,6 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 targetSection.style.display = 'flex';
             }
+            // Hide the navbar when a button is clicked
+            menuIcon.style.display = 'block';
+            closeIcon.style.display = 'none';
+            navbarContainer.style.display = 'none';
         });
     });
 

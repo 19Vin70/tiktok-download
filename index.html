@@ -19,6 +19,7 @@
         <nav class="navbar">
             <button data-target="home" class="filter-btn">Home</button>
             <button data-target="ttdl" class="filter-btn">TiktokDL</button>
+            <button data-target="filedl" class="filter-btn">FileDL</button>
         </nav>
 
         <i class="fa-solid fa-bars" id="menu-icon"></i>
@@ -39,6 +40,16 @@
                 <form id="ttdlForm" method="post">
                     <input type="text" name="url" placeholder="Enter Tiktok video URL" required>
                     <button type="submit" id="ttdlButton">Download</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="section" id="filedl">
+            <div class="card">
+                <h2>Download Any Files</h2>
+                <form action="#">
+                    <input type="url" placeholder="Paste file url" id="filedl-input" required>
+                    <button id="file-download-btn">Download File</button>
                 </form>
             </div>
         </section>

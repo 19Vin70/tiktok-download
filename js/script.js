@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 targetSection.style.display = 'flex';
             }
-            // Hide the navbar when a button is clicked
             menuIcon.style.display = 'block';
             closeIcon.style.display = 'none';
             navbarContainer.style.display = 'none';
@@ -72,5 +71,34 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             console.error('Please enter a TikTok video URL');
         }
+    } );
+    
+    const fileInput = document.getElementById("filedl-input");
+    const fileDownloadBtn = document.getElementById("file-download-btn"); 
+
+    fileDownloadBtn.addEventListener("click", e => {
+        e.preventDefault();
+        fileDownloadBtn.innerText = "Downloading file...";
+        fetchFile(fileInput.value);
     });
+
+    function fetchFile(url) {
+        fetch(url)
+            .then(res => res.blob())
+            .then(file => {
+                let tempUrl = URL.createObjectURL(file);
+                const aTag = document.createElement("a");
+                aTag.href = tempUrl;
+                aTag.download = url.substring(url.lastIndexOf('/') + 1); 
+                document.body.appendChild(aTag);
+                aTag.click();
+                fileDownloadBtn.innerText = "Download File";
+                URL.revokeObjectURL(tempUrl);
+                aTag.remove();
+            })
+            .catch(() => {
+                alert("Failed to download file!");
+                fileDownloadBtn.innerText = "Download File";
+            });
+    }
 });

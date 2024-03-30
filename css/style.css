@@ -195,6 +195,8 @@ section {
         font-weight: 500;
         letter-spacing: 1px;
         position: absolute;
+        width: 100%;
+        text-align: left;
     }
 
     .header .navbar button:nth-child(1) {

@@ -183,11 +183,12 @@ section {
         left: 0;
         width: 100%;
         display: none;
-        height: auto;
+        height: 140px;
         background: #141414;
         backdrop-filter: blur(3px);
         flex-direction: column;
         padding: 15px 30px;
+        border-bottom: 1px solid #333;
     }
 
     .header .navbar button {
@@ -205,5 +206,9 @@ section {
 
     .header .navbar button:nth-child(2) {
         top: 50px;
+    }
+
+    .header .navbar button:nth-child(3) {
+        top: 90px;
     }
 }

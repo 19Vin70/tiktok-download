@@ -224,13 +224,3 @@ section {
     }
 }
 
-
-.count {
-    position: fixed;
-    z-index: 999;
-    bottom: 30px;
-    right: 30px;
-    background: linear-gradient(90deg, #ff105f, #ffad06);
-    padding: 10px 15px;
-    border-radius: 10px;
-}

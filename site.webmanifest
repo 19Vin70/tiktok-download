@@ -6,12 +6,12 @@
     "lang": "en-US",
     "icons": [
       {
-        "src": "/images/img-192.jpg",
+        "src": "/images/splashImg192.png",
         "sizes": "192x192",
         "type": "image/png"
       },
       {
-        "src": "/images/img-512.jpg",
+        "src": "/images/splashImg.png",
         "sizes": "512x512",
         "type": "image/png"
       }

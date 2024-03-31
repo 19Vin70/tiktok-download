@@ -183,6 +183,13 @@ section {
     border: none;
 }
 
+.hidden{
+  display: none;
+}
+.hidden.active{
+  display: block;
+}
+
 @media (max-width: 768px) {
     .header .navbar {
         position: absolute;
@@ -190,7 +197,7 @@ section {
         left: 0;
         width: 100%;
         display: none;
-        height: 180px;
+        height: 220px;
         background: #141414;
         backdrop-filter: blur(3px);
         flex-direction: column;
@@ -221,6 +228,10 @@ section {
 
     .header .navbar button:nth-child(4) {
         top: 130px;
+    }
+
+    .header .navbar button:nth-child(5) {
+        top: 170px;
     }
 }
 

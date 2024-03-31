@@ -105,11 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function download() {
-    var link = document.getElementById('link').value;
-    var format = document.getElementById('format').value;
+    let link = document.getElementById('link').value;
+    let format = document.getElementById('format').value;
 
     if (link != "") {
-        var url;
+        let url;
         if (link.includes("https://youtu.be/")) {
             url = link.replace("https://youtu.be/", "https://www.youtube.com/embed/");
         } else if (link.includes("https://www.youtube.com/watch?v=")) {
@@ -119,8 +119,8 @@ function download() {
         }
 
         if (url) {
-            var downloadUrl = `https://loader.to/api/button/?url=${encodeURIComponent(link)}&f=${format}`;
-            var iframe = `<iframe style="width: 100%; height: 50px; border: hidden; overflow: hidden; outline: none;" scrolling="no" src="${downloadUrl}"></iframe>`;
+            let downloadUrl = `https://loader.to/api/button/?url=${encodeURIComponent(link)}&f=${format}`;
+            let iframe = `<iframe style="width: 100%; height: 50px; border: hidden; overflow: hidden; outline: none;" scrolling="no" src="${downloadUrl}"></iframe>`;
             document.querySelector('.result2').innerHTML = iframe;
         } else {
             alert("Invalid YouTube video link!");
@@ -128,4 +128,62 @@ function download() {
     } else {
         alert("Please enter a YouTube video link!");
     }
+}
+
+
+function Get() {
+    let youtubeUrl = document.getElementById('youtubeUrl').value.trim();
+    
+    if (!isValidUrl(youtubeUrl)) {
+        alert('Please enter a valid YouTube URL.');
+        return;
+    }
+    
+    let videoID = getVideoID(youtubeUrl);
+    if (!videoID) {
+        alert('Unable to extract video ID from the URL.');
+        return;
+    }
+    
+    downloadMusic(videoID);
+}
+
+function isValidUrl(url) {
+    let regex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?.*v=|.*\/v\/|embed\/|v\/))?([\w\-]{11})(\&.*)?$/;
+    return regex.test(url);
+}
+
+function getVideoID(url) {
+    let match = url.match(/(?:v=|\/)([\w\-]{11})(?:\S+)?$/);
+    return match ? match[1] : null;
+}
+
+function downloadMusic(videoID) {
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '2b929025ddmshd3302ab633a818cp1ab4cdjsne14ca95e2a8d',
+            'X-RapidAPI-Host': 'youtube-mp36.p.rapidapi.com'
+        }
+    };
+
+    let urlLink = 'https://youtube-mp36.p.rapidapi.com/dl?id=' + videoID;
+    fetch(urlLink, options)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            const downloadLink = data.link;
+            const anchor = document.createElement("a");
+            anchor.href = downloadLink;
+            anchor.download = 'MWC.mp3';
+            document.body.appendChild(anchor);
+            anchor.click();
+            document.body.removeChild(anchor);
+        })
+        .catch(err => console.error('Error downloading music:', err));
 }

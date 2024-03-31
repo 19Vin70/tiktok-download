@@ -43,6 +43,7 @@
             <button data-target="home" class="filter-btn">Home</button>
             <button data-target="ttdl" class="filter-btn">TiktokDL</button>
             <button data-target="ytdl" class="filter-btn">YoutubeDL</button>
+            <button data-target="musicdl" class="filter-btn">YoutubeMusicDL</button>
             <button data-target="filedl" class="filter-btn">ImageDL</button>
         </nav>
 
@@ -62,7 +63,7 @@
             <div class="card">
                 <h2>Download Tiktok Videos</h2>
                 <form id="ttdlForm" method="post">
-                    <input type="text" name="url" placeholder="Enter Tiktok video URL" required>
+                    <input type="text" name="url" placeholder="Enter Your Tiktok Url..." required>
                     <button type="submit" id="ttdlButton">Download</button>
                 </form>
             </div>
@@ -72,7 +73,7 @@
             <div class="card">
                 <h2>Download Images</h2>
                 <form action="#">
-                    <input type="url" placeholder="Paste image url" id="filedl-input" required>
+                    <input type="url" placeholder="Enter Yor image url..." id="filedl-input" required>
                     <button id="file-download-btn">Download</button>
                 </form>
             </div>
@@ -82,7 +83,7 @@
             <div class="card">
                 <h2>Download YouTube Videos</h2>
                 <form id="ytdlForm" onsubmit="event.preventDefault(); download();">
-                    <input type="text" id="link" placeholder="Video Link" />
+                    <input type="text" id="link" placeholder="Enter Your YouTube Url..." />
                     <select id="format" class="format" required="">
                         <option disabled="" selected="">Select Video Format</option>
                         <option value="1080">1080p</option>
@@ -91,6 +92,16 @@
                     </select>
                     <button type="submit" class="btn">Extract Video</button>
                     <div class="result2"></div>
+                </form>
+            </div>
+        </section>
+
+        <section class="section" id="musicdl">
+            <div class="card">
+                <h2>Download YouTube Videos To Music</h2>
+                <form onsubmit="event.preventDefault(); Get();">
+                    <input type="text" class="link YouTube" id="youtubeUrl" placeholder="Enter Your YouTube Url..." />
+                    <button type="submit" class="Get">Download</button>
                 </form>
             </div>
         </section>

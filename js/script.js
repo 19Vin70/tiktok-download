@@ -253,9 +253,15 @@ document.getElementById("aiForm").addEventListener("submit", function(event) {
     event.preventDefault(); 
             
     let question = document.getElementById("questionInput").value;
+    let userID = localStorage.getItem("userID"); 
+            
+    if (!userID) {
+        userID = Math.floor(Math.random() * 1000); 
+        localStorage.setItem("userID", userID); 
+    }
             
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://deku-rest-api.replit.app/gpt4?prompt=" + encodeURIComponent(question) + "&uid=100");
+    xhr.open("GET", "https://deku-rest-api.replit.app/gpt4?prompt=" + encodeURIComponent(question) + "&uid=" + userID);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             let response = JSON.parse(xhr.responseText);
@@ -274,7 +280,6 @@ function displayResponse(response) {
     messageElement.innerHTML = "<p>" + response + "</p>";
     messagesContainer.appendChild(messageElement);
 }
-
 
 
 

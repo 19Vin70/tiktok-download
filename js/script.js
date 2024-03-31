@@ -280,20 +280,19 @@ function displayResponse(response) {
 
 
 
-document.getElementById("generate-button").addEventListener("click", function(event) {
+document.addEventListener( "DOMContentLoaded", function ()
+{
+    document.getElementById("generate-button").addEventListener("click", function(event) {
     var inputField = document.getElementById("imagegen-input");
     var prompt = inputField.value;
     var apiUrl = "https://deku-rest-api.replit.app/dalle?prompt=" + encodeURIComponent(prompt);
 
-    var progressBar = document.getElementById("progress-bar");
-    progressBar.style.display = "block";
-    
+
     fetch(apiUrl)
         .then(response => {
-            const contentLength = response.headers.get('content-length');
-            const total = parseInt(contentLength, 10);
-            let loaded = 0;
-
+            if (!response.ok) {
+                throw new Error("Failed to fetch");
+            }
             const reader = response.body.getReader();
             return new ReadableStream({
                 start(controller) {
@@ -303,8 +302,6 @@ document.getElementById("generate-button").addEventListener("click", function(ev
                                 controller.close();
                                 return;
                             }
-                            loaded += value.byteLength;
-                            progressBar.value = loaded / total;
                             controller.enqueue(value);
                             pump();
                         }).catch(error => {
@@ -322,24 +319,27 @@ document.getElementById("generate-button").addEventListener("click", function(ev
             var imageURL = URL.createObjectURL(blob);
             displayImage(imageURL);
             setDownloadLink(imageURL);
-            progressBar.style.display = "none"; 
         })
         .catch(error => {
             console.error("Error:", error);
-            progressBar.style.display = "none"; 
         });
-});
+    });
 
-function displayImage(imageUrl) {
-    var previewDiv = document.querySelector(".imagegen-preview");
-    previewDiv.innerHTML = ""; 
-    var imgElement = document.createElement("img");
-    imgElement.src = imageUrl;
-    previewDiv.appendChild(imgElement);
-}
+    function displayImage(imageUrl) {
+        var previewDiv = document.querySelector(".imagegen-preview");
+        previewDiv.innerHTML = ""; 
+        var imgElement = document.createElement("img");
+        imgElement.src = imageUrl;
+        previewDiv.appendChild(imgElement);
+    }
 
-function setDownloadLink(imageUrl) {
-    var downloadLink = document.getElementById("download-link");
-    downloadLink.href = imageUrl;
-    downloadLink.style.display = "block"; 
-}
+    function setDownloadLink(imageUrl) {
+        var downloadLink = document.getElementById("download-link");
+        if (!downloadLink) {
+            console.error("Download link element not found.");
+            return;
+        }
+        downloadLink.href = imageUrl;
+        downloadLink.style.display = "block"; 
+    }
+})

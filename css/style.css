@@ -175,6 +175,13 @@ section {
     background: linear-gradient(90deg, #ffad06, #ff105f);
 }
 
+.card .format {
+    background: #242424;
+    padding: 15px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+}
 
 @media (max-width: 500px) {
     .header .navbar {
@@ -183,7 +190,7 @@ section {
         left: 0;
         width: 100%;
         display: none;
-        height: 140px;
+        height: 180px;
         background: #141414;
         backdrop-filter: blur(3px);
         flex-direction: column;
@@ -210,5 +217,9 @@ section {
 
     .header .navbar button:nth-child(3) {
         top: 90px;
+    }
+
+    .header .navbar button:nth-child(4) {
+        top: 130px;
     }
 }

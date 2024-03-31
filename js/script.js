@@ -102,3 +102,30 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 });
+
+
+function download() {
+    var link = document.getElementById('link').value;
+    var format = document.getElementById('format').value;
+
+    if (link != "") {
+        var url;
+        if (link.includes("https://youtu.be/")) {
+            url = link.replace("https://youtu.be/", "https://www.youtube.com/embed/");
+        } else if (link.includes("https://www.youtube.com/watch?v=")) {
+            url = link.replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/");
+        } else if (link.includes("https://youtube.com/shorts/")) {
+            url = link.replace("https://youtube.com/shorts/", "https://www.youtube.com/embed/").replace("?feature=share", "");
+        }
+
+        if (url) {
+            var downloadUrl = `https://loader.to/api/button/?url=${encodeURIComponent(link)}&f=${format}`;
+            var iframe = `<iframe style="width: 100%; height: 50px; border: hidden; overflow: hidden; outline: none;" scrolling="no" src="${downloadUrl}"></iframe>`;
+            document.querySelector('.result2').innerHTML = iframe;
+        } else {
+            alert("Invalid YouTube video link!");
+        }
+    } else {
+        alert("Please enter a YouTube video link!");
+    }
+}

@@ -246,3 +246,31 @@ speechBtn.addEventListener("click", e => {
 
 
 
+
+
+
+document.getElementById("aiForm").addEventListener("submit", function(event) {
+    event.preventDefault(); 
+            
+    var question = document.getElementById("questionInput").value;
+            
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://deku-rest-api.replit.app/gpt4?prompt=" + encodeURIComponent(question) + "&uid=100");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            displayResponse(response.gpt4); 
+        }
+    };
+    xhr.send();
+});
+
+function displayResponse(response) {
+    var messagesContainer = document.querySelector( ".messages" );
+    messagesContainer.innerHTML = "";
+
+    var messageElement = document.createElement("div");
+    messageElement.classList.add("message");
+    messageElement.innerHTML = "<p>" + response + "</p>";
+    messagesContainer.appendChild(messageElement);
+}

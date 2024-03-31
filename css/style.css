@@ -7,6 +7,7 @@
     font-family: 'Poppins', sans-serif;
     color: #fff;
     text-decoration: none;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -195,6 +196,12 @@ textarea {
     resize: none;
 }
 
+.messages {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+
 
 
 
@@ -205,7 +212,7 @@ textarea {
         left: 0;
         width: 100%;
         display: none;
-        height: 260px;
+        height: 300px;
         background: #141414;
         backdrop-filter: blur(3px);
         flex-direction: column;
@@ -244,6 +251,10 @@ textarea {
 
     .header .navbar button:nth-child(6) {
         top: 210px;
+    }
+
+    .header .navbar button:nth-child(7) {
+        top: 250px;
     }
 }
 

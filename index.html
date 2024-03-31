@@ -46,6 +46,7 @@
             <button data-target="musicdl" class="filter-btn">YoutubeMusicDL</button>
             <button data-target="filedl" class="filter-btn">ImageDL</button>
             <button data-target="ttsxdl" class="filter-btn">Text To Speech</button>
+            <button data-target="aidl" class="filter-btn">Conversational AI</button>
         </nav>
 
         <i class="fa-solid fa-bars" id="menu-icon"></i>
@@ -64,7 +65,7 @@
             <div class="card">
                 <h2>Download Tiktok Videos</h2>
                 <form id="ttdlForm" method="post">
-                    <input type="text" name="url" placeholder="Enter Your Tiktok Url..." required>
+                    <input type="text" name="url" placeholder="Enter Your Tiktok Url..." autofocus required>
                     <button type="submit" id="ttdlButton">Download</button>
                 </form>
             </div>
@@ -74,7 +75,7 @@
             <div class="card">
                 <h2>Download Images</h2>
                 <form action="#">
-                    <input type="url" placeholder="Enter Yor image url..." id="filedl-input" required>
+                    <input type="url" placeholder="Enter Yor image url..." id="filedl-input" autofocus required>
                     <button id="file-download-btn">Download</button>
                 </form>
             </div>
@@ -84,7 +85,7 @@
             <div class="card">
                 <h2>Download YouTube Videos</h2>
                 <form id="ytdlForm" onsubmit="event.preventDefault(); download();">
-                    <input type="text" id="link" placeholder="Enter Your YouTube Url..." />
+                    <input type="text" id="link" placeholder="Enter Your YouTube Url..." autofocus required />
                     <select id="format" class="format" required="">
                         <option disabled="" selected="">Select Video Format</option>
                         <option value="1080">1080p</option>
@@ -101,7 +102,7 @@
             <div class="card">
                 <h2>Download YouTube Videos To Music</h2>
                 <form onsubmit="event.preventDefault(); Get();">
-                    <input type="text" class="link YouTube" id="youtubeUrl" placeholder="Enter Your YouTube Url..." />
+                    <input type="text" class="link YouTube" id="youtubeUrl" placeholder="Enter Your YouTube Url..." autofocus required />
                     <button type="submit" class="Get">Download</button>
                 </form>
             </div>
@@ -112,7 +113,7 @@
                 <h2>Text To Speech</h2>
                 <form action="#">
                     <div class="row">
-                        <textarea placeholder="Enter Text To Talk..."></textarea>
+                        <textarea placeholder="Enter Text To Talk..." autofocus required></textarea>
                     </div>
                     <div class="row">
                         <div class="outer">
@@ -122,6 +123,19 @@
                         </div>
                     </div>
                     <button id="speech">Talk Now</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="section" id="aidl">
+            <div class="card">
+                <h2>Artificial Intelligence</h2>
+                <div class="messages">
+
+                </div>
+                <form id="aiForm">
+                    <input type="text" class="link YouTube" id="questionInput" placeholder="Ask anything..." autofocus required />
+                    <button type="submit" class="askAI">Ask now</button>
                 </form>
             </div>
         </section>

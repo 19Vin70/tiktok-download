@@ -248,7 +248,7 @@ textarea {
         left: 0;
         width: 100%;
         display: none;
-        height: 340px;
+        height: 380px;
         background: #141414;
         backdrop-filter: blur(3px);
         flex-direction: column;
@@ -295,6 +295,10 @@ textarea {
 
     .header .navbar button:nth-child(8) {
         top: 290px;
+    }
+
+    .header .navbar button:nth-child(9) {
+        top: 330px;
     }
 }
 

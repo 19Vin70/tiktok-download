@@ -43,6 +43,7 @@
             <button data-target="home" class="filter-btn">Home</button>
             <button data-target="ttdl" class="filter-btn">TiktokDL</button>
             <button data-target="ytdl" class="filter-btn">YoutubeDL</button>
+            <button data-target="fbdl" class="filter-btn">FacebookReelsDL</button>
             <button data-target="musicdl" class="filter-btn">YoutubeMusicDL</button>
             <button data-target="filedl" class="filter-btn">ImageDL</button>
             <button data-target="ttsxdl" class="filter-btn">Text To Speech</button>
@@ -150,6 +151,16 @@
                     <button type="button" id="generate-button"><i class="fa fa-play"></i> Generate</button>
                 </form>
                 <a id="download-link" style="display: none;" class="imagegen-button" download="generated_image.png">Download Image</a>
+            </div>
+        </section>
+
+        <section class="section" id="fbdl">
+            <div class="card">
+                <h2>Download Facebook Reels</h2>
+                <form onsubmit="event.preventDefault(); GetReels();">
+                    <input type="text" class="link Facebook" id="fbUrl" placeholder="Enter Your Facebook Reels Url..." autofocus required />
+                    <button type="submit" class="fbDownload">Download</button>
+                </form>
             </div>
         </section>
     </div>

@@ -343,3 +343,63 @@ document.addEventListener( "DOMContentLoaded", function ()
         downloadLink.style.display = "block"; 
     }
 })
+
+
+
+
+async function GetReels() {
+    var url = document.getElementById('fbUrl').value.trim(); 
+    var reelId = extractReelId(url);
+    var apiUrl = "https://deku-rest-api.replit.app/facebook?url=https://web.facebook.com/reel/" + reelId;
+
+    console.log("API URL:", apiUrl); 
+
+    try {
+        const response = await fetch(apiUrl);
+        console.log("Response Status:", response.status); 
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch video URL. Please check your URL and try again.');
+        }
+
+        const responseData = await response.json(); 
+        console.log("Response Data:", responseData); 
+
+        const videoUrl = responseData.result;
+
+        if (!videoUrl) {
+            throw new Error('Video URL not found in the response. Please check your URL and try again.');
+        }
+
+        downloadVideo(videoUrl);
+    } catch (error) {
+        console.error('Error fetching video:', error);
+        alert(error.message);
+    }
+}
+
+function downloadVideo(videoUrl) {
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; 
+    const proxiedUrl = proxyUrl + videoUrl;
+
+    fetch(proxiedUrl)
+        .then(response => response.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'facebook_video.mp4';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Error downloading video:', error);
+            alert('Error downloading video. Please try again.');
+        });
+}
+
+function extractReelId(url) {
+    var parts = url.split('/');
+    return parts[parts.length - 1];
+}

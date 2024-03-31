@@ -252,13 +252,13 @@ speechBtn.addEventListener("click", e => {
 document.getElementById("aiForm").addEventListener("submit", function(event) {
     event.preventDefault(); 
             
-    var question = document.getElementById("questionInput").value;
+    let question = document.getElementById("questionInput").value;
             
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open("GET", "https://deku-rest-api.replit.app/gpt4?prompt=" + encodeURIComponent(question) + "&uid=100");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            var response = JSON.parse(xhr.responseText);
+            let response = JSON.parse(xhr.responseText);
             displayResponse(response.gpt4); 
         }
     };
@@ -266,10 +266,10 @@ document.getElementById("aiForm").addEventListener("submit", function(event) {
 });
 
 function displayResponse(response) {
-    var messagesContainer = document.querySelector( ".messages" );
+    let messagesContainer = document.querySelector( ".messages" );
     messagesContainer.innerHTML = "";
 
-    var messageElement = document.createElement("div");
+    let messageElement = document.createElement("div");
     messageElement.classList.add("message");
     messageElement.innerHTML = "<p>" + response + "</p>";
     messagesContainer.appendChild(messageElement);
@@ -283,9 +283,9 @@ function displayResponse(response) {
 document.addEventListener( "DOMContentLoaded", function ()
 {
     document.getElementById("generate-button").addEventListener("click", function(event) {
-    var inputField = document.getElementById("imagegen-input");
-    var prompt = inputField.value;
-    var apiUrl = "https://deku-rest-api.replit.app/dalle?prompt=" + encodeURIComponent(prompt);
+    let inputField = document.getElementById("imagegen-input");
+    let prompt = inputField.value;
+    let apiUrl = "https://deku-rest-api.replit.app/dalle?prompt=" + encodeURIComponent(prompt);
 
 
     fetch(apiUrl)
@@ -316,7 +316,7 @@ document.addEventListener( "DOMContentLoaded", function ()
         .then(stream => new Response(stream))
         .then(response => response.blob())
         .then(blob => {
-            var imageURL = URL.createObjectURL(blob);
+            let imageURL = URL.createObjectURL(blob);
             displayImage(imageURL);
             setDownloadLink(imageURL);
         })
@@ -326,15 +326,15 @@ document.addEventListener( "DOMContentLoaded", function ()
     });
 
     function displayImage(imageUrl) {
-        var previewDiv = document.querySelector(".imagegen-preview");
+        let previewDiv = document.querySelector(".imagegen-preview");
         previewDiv.innerHTML = ""; 
-        var imgElement = document.createElement("img");
+        let imgElement = document.createElement("img");
         imgElement.src = imageUrl;
         previewDiv.appendChild(imgElement);
     }
 
     function setDownloadLink(imageUrl) {
-        var downloadLink = document.getElementById("download-link");
+        let downloadLink = document.getElementById("download-link");
         if (!downloadLink) {
             console.error("Download link element not found.");
             return;
@@ -348,22 +348,18 @@ document.addEventListener( "DOMContentLoaded", function ()
 
 
 async function GetReels() {
-    var url = document.getElementById('fbUrl').value.trim(); 
-    var reelId = extractReelId(url);
-    var apiUrl = "https://deku-rest-api.replit.app/facebook?url=https://web.facebook.com/reel/" + reelId;
-
-    console.log("API URL:", apiUrl); 
+    let url = document.getElementById('fbUrl').value.trim(); 
+    let reelId = extractReelId(url);
+    let apiUrl = "https://deku-rest-api.replit.app/facebook?url=https://web.facebook.com/reel/" + reelId;
 
     try {
         const response = await fetch(apiUrl);
-        console.log("Response Status:", response.status); 
 
         if (!response.ok) {
             throw new Error('Failed to fetch video URL. Please check your URL and try again.');
         }
 
         const responseData = await response.json(); 
-        console.log("Response Data:", responseData); 
 
         const videoUrl = responseData.result;
 
@@ -371,7 +367,9 @@ async function GetReels() {
             throw new Error('Video URL not found in the response. Please check your URL and try again.');
         }
 
-        downloadVideo(videoUrl);
+        downloadVideo( videoUrl );
+        
+        document.getElementById('fbUrl').value = "";
     } catch (error) {
         console.error('Error fetching video:', error);
         alert(error.message);
@@ -400,6 +398,6 @@ function downloadVideo(videoUrl) {
 }
 
 function extractReelId(url) {
-    var parts = url.split('/');
+    let parts = url.split('/');
     return parts[parts.length - 1];
 }

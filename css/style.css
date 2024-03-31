@@ -190,7 +190,7 @@ section {
   display: block;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 880px) {
     .header .navbar {
         position: absolute;
         top: 100%;

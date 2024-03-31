@@ -274,3 +274,72 @@ function displayResponse(response) {
     messageElement.innerHTML = "<p>" + response + "</p>";
     messagesContainer.appendChild(messageElement);
 }
+
+
+
+
+
+
+document.getElementById("generate-button").addEventListener("click", function(event) {
+    var inputField = document.getElementById("imagegen-input");
+    var prompt = inputField.value;
+    var apiUrl = "https://deku-rest-api.replit.app/dalle?prompt=" + encodeURIComponent(prompt);
+
+    var progressBar = document.getElementById("progress-bar");
+    progressBar.style.display = "block";
+    
+    fetch(apiUrl)
+        .then(response => {
+            const contentLength = response.headers.get('content-length');
+            const total = parseInt(contentLength, 10);
+            let loaded = 0;
+
+            const reader = response.body.getReader();
+            return new ReadableStream({
+                start(controller) {
+                    function pump() {
+                        reader.read().then(({ done, value }) => {
+                            if (done) {
+                                controller.close();
+                                return;
+                            }
+                            loaded += value.byteLength;
+                            progressBar.value = loaded / total;
+                            controller.enqueue(value);
+                            pump();
+                        }).catch(error => {
+                            console.error('Error reading response body:', error);
+                            controller.error(error)
+                        });
+                    }
+                    pump();
+                }
+            });
+        })
+        .then(stream => new Response(stream))
+        .then(response => response.blob())
+        .then(blob => {
+            var imageURL = URL.createObjectURL(blob);
+            displayImage(imageURL);
+            setDownloadLink(imageURL);
+            progressBar.style.display = "none"; 
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            progressBar.style.display = "none"; 
+        });
+});
+
+function displayImage(imageUrl) {
+    var previewDiv = document.querySelector(".imagegen-preview");
+    previewDiv.innerHTML = ""; 
+    var imgElement = document.createElement("img");
+    imgElement.src = imageUrl;
+    previewDiv.appendChild(imgElement);
+}
+
+function setDownloadLink(imageUrl) {
+    var downloadLink = document.getElementById("download-link");
+    downloadLink.href = imageUrl;
+    downloadLink.style.display = "block"; 
+}

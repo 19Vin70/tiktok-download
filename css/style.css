@@ -159,7 +159,8 @@ section {
     margin-top: 20px;
 }
 
-.card form button {
+.card form button,
+.imagegen-button {
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
@@ -169,9 +170,12 @@ section {
     font-weight: 500;
     outline: none;
     border: none;
+    width: 100%;
+    text-align: center;
 }
 
-.card form button:hover {
+.card form button:hover,
+.imagegen-button:hover {
     transition: .3s ease-in-out;
     background: linear-gradient(90deg, #ffad06, #ff105f);
 }
@@ -201,18 +205,50 @@ textarea {
     overflow-y: auto;
 }
 
+.imagegen-preview {
+    position: relative;
+    width: 100%;
+    max-height: 200px;
+    border: 1px solid #141414;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: -20px;
+}
+
+.imagegen-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#progress-bar {
+  width: 100%;
+  height: 15px;
+  border: 2px solid #141414;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+#progress-bar::-webkit-progress-bar {
+  background-color: #f5f5f5;
+}
+
+#progress-bar::-webkit-progress-value {
+  background-color: #007bff;
+}
 
 
 
 
-@media (max-width: 880px) {
+@media (max-width: 1400px) {
     .header .navbar {
         position: absolute;
         top: 100%;
         left: 0;
         width: 100%;
         display: none;
-        height: 300px;
+        height: 340px;
         background: #141414;
         backdrop-filter: blur(3px);
         flex-direction: column;
@@ -255,6 +291,10 @@ textarea {
 
     .header .navbar button:nth-child(7) {
         top: 250px;
+    }
+
+    .header .navbar button:nth-child(8) {
+        top: 290px;
     }
 }
 

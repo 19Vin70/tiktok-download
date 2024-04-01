@@ -259,13 +259,35 @@ document.getElementById("aiForm").addEventListener("submit", function(event) {
         userID = Math.floor(Math.random() * 1000); 
         localStorage.setItem("userID", userID); 
     }
+    
+    let selectedModel = document.getElementById("ai-select").value;
+    let apiUrl;
+    switch (selectedModel) {
+        case "gpt4":
+            apiUrl = "https://deku-rest-api.replit.app/gpt4";
+            break;
+        case "gemini":
+            apiUrl = "https://deku-rest-api.replit.app/gemini";
+            break;
+        case "llama":
+            apiUrl = "https://deku-rest-api.replit.app/llama-70b";
+            break;
+        case "gemma":
+            apiUrl = "https://deku-rest-api.replit.app/gemma-7b";
+            break;
+        case "qwen":
+            apiUrl = "https://deku-rest-api.replit.app/qwen-72b";
+            break;
+        default:
+            apiUrl = "https://deku-rest-api.replit.app/gpt4";
+    }
             
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://deku-rest-api.replit.app/gpt4?prompt=" + encodeURIComponent(question) + "&uid=" + userID);
+    xhr.open("GET", apiUrl + "?prompt=" + encodeURIComponent(question) + "&uid=" + userID);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             let response = JSON.parse(xhr.responseText);
-            displayResponse(response.gpt4); 
+            displayResponse(response[selectedModel]); 
         }
     };
     xhr.send();
@@ -280,6 +302,7 @@ function displayResponse(response) {
     messageElement.innerHTML = "<p>" + response + "</p>";
     messagesContainer.appendChild(messageElement);
 }
+
 
 
 

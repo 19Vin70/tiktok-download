@@ -146,6 +146,16 @@
             <div class="card">
                 <h2>Images Generator</h2>
                 <div class="imagegen-preview"></div>
+                <select class="format select" id="model-select" style="margin-top: 10px; margin-bottom: -20px;">
+                    <option disabled selected>Select model</option>
+                    <option value="dalle">Dalle</option>
+                    <option value="dallev2">DalleV2</option>
+                    <option value="sdxl">SDXL</option>
+                    <option value="openjourney">Open Journey</option>
+                    <option value="emi">Emi</option>
+                    <option value="render">Render</option>
+                    <option value="pixart">Pixart</option>
+                </select>
                 <form id="imagegen-form">
                     <input type="text" placeholder="Enter Your prompt..." id="imagegen-input" autofocus required>
                     <button type="button" id="generate-button"><i class="fa fa-play"></i> Generate</button>

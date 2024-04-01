@@ -285,54 +285,73 @@ function displayResponse(response) {
 
 
 
-document.addEventListener( "DOMContentLoaded", function ()
-{
-    document.getElementById("generate-button").addEventListener("click", function(event) {
-    let inputField = document.getElementById("imagegen-input");
-    let prompt = inputField.value;
-    let apiUrl = "https://deku-rest-api.replit.app/dalle?prompt=" + encodeURIComponent(prompt);
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("generate-button").addEventListener("click", function (event) {
+        let inputField = document.getElementById("imagegen-input");
+        let prompt = inputField.value;
+        let modelSelect = document.getElementById("model-select");
+        let selectedModel = modelSelect.options[modelSelect.selectedIndex].value;
+        let apiUrl;
 
+        if (selectedModel === "dalle") {
+            apiUrl = "https://deku-rest-api.replit.app/dalle?prompt=" + encodeURIComponent(prompt);
+        } else if (selectedModel === "dallev2") {
+            apiUrl ="https://deku-rest-api.replit.app/dallev2?prompt=" + encodeURIComponent(prompt);s
+        } else if (selectedModel === "sdxl") {
+            apiUrl = "https://deku-rest-api.replit.app/sdxl?prompt=" + encodeURIComponent(prompt) + "&styles=1";
+        } else if ( selectedModel === "openjourney" ) {
+            apiUrl = "https://deku-rest-api.replit.app/openjourney?prompt=" + encodeURIComponent(prompt);
+        } else if ( selectedModel === "emi" ) {
+            apiUrl = "https://deku-rest-api.replit.app/emi?prompt=" + encodeURIComponent(prompt);
+        } else if ( selectedModel === "render" ) {
+            apiUrl = "https://deku-rest-api.replit.app/render?prompt=" + encodeURIComponent(prompt);
+        } else if (selectedModel === "pixart") {
+            apiUrl = "https://deku-rest-api.replit.app/pixart?prompt=" + encodeURIComponent(prompt) + "&styles=1";
+        } else {
+            console.error("Invalid model selected.");
+            return;
+        }
 
-    fetch(apiUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Failed to fetch");
-            }
-            const reader = response.body.getReader();
-            return new ReadableStream({
-                start(controller) {
-                    function pump() {
-                        reader.read().then(({ done, value }) => {
-                            if (done) {
-                                controller.close();
-                                return;
-                            }
-                            controller.enqueue(value);
-                            pump();
-                        }).catch(error => {
-                            console.error('Error reading response body:', error);
-                            controller.error(error)
-                        });
-                    }
-                    pump();
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to fetch");
                 }
+                const reader = response.body.getReader();
+                return new ReadableStream({
+                    start(controller) {
+                        function pump() {
+                            reader.read().then(({ done, value }) => {
+                                if (done) {
+                                    controller.close();
+                                    return;
+                                }
+                                controller.enqueue(value);
+                                pump();
+                            }).catch(error => {
+                                console.error('Error reading response body:', error);
+                                controller.error(error)
+                            });
+                        }
+                        pump();
+                    }
+                });
+            })
+            .then(stream => new Response(stream))
+            .then(response => response.blob())
+            .then(blob => {
+                let imageURL = URL.createObjectURL(blob);
+                displayImage(imageURL);
+                setDownloadLink(imageURL);
+            })
+            .catch(error => {
+                console.error("Error:", error);
             });
-        })
-        .then(stream => new Response(stream))
-        .then(response => response.blob())
-        .then(blob => {
-            let imageURL = URL.createObjectURL(blob);
-            displayImage(imageURL);
-            setDownloadLink(imageURL);
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        });
     });
 
     function displayImage(imageUrl) {
         let previewDiv = document.querySelector(".imagegen-preview");
-        previewDiv.innerHTML = ""; 
+        previewDiv.innerHTML = "";
         let imgElement = document.createElement("img");
         imgElement.src = imageUrl;
         previewDiv.appendChild(imgElement);
@@ -345,9 +364,10 @@ document.addEventListener( "DOMContentLoaded", function ()
             return;
         }
         downloadLink.href = imageUrl;
-        downloadLink.style.display = "block"; 
+        downloadLink.style.display = "block";
     }
-})
+});
+
 
 
 

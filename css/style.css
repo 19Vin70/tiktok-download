@@ -131,6 +131,7 @@ section {
     height: auto;
     padding: 40px 30px;
     border-radius: 20px;
+    position: relative;
 }
 
 .card h2 {

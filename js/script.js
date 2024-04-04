@@ -449,3 +449,226 @@ function extractReelId(url) {
     let parts = url.split('/');
     return parts[parts.length - 1];
 }
+
+
+
+
+
+
+
+
+
+
+let conversationHistory = []; 
+let userName = null; 
+
+document.getElementById('kabeForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    let message = document.getElementById('kabeInput').value;
+    let corsProxy = "https://cors-anywhere.herokuapp.com/";
+
+    if (!userName) {
+        userName = message;
+        conversationHistory.push({ sender: 'user', message: message }); 
+        appendMessage(`Nice to meet you, ${userName}! How can I assist you?`);
+    } else {
+        fetch(`${corsProxy}https://api.popcat.xyz/chatbot?msg=${encodeURIComponent(message)}&owner=Marvin+Quillo+Saiko&botname=Kabe`)
+        .then(response => response.json())
+        .then(data => {
+            conversationHistory.push({ sender: 'user', message: message }); 
+            conversationHistory.push({ sender: 'kabe', message: data.response }); 
+            appendMessage(data.response);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    document.getElementById('kabeInput').value = '';
+});
+
+function appendMessage(message) {
+    let messagesDiv = document.getElementById( 'messages' );
+    messagesDiv.innerHTML = '';
+    let messageElement = document.createElement('p');
+    messageElement.textContent = message;
+    messagesDiv.appendChild(messageElement);
+}
+
+
+
+
+
+
+
+
+
+
+
+document.getElementById( 'ghForm' ).addEventListener( 'submit', function ( event )
+{
+    event.preventDefault();
+    
+    let corsProxy = "https://cors-anywhere.herokuapp.com/";
+
+    const username = document.getElementById( 'ghInput' ).value.trim();
+    const apiUrl = `${ corsProxy }https://api.popcat.xyz/github/${ username }`;
+        
+
+    fetch( apiUrl )
+        .then( response => response.json() )
+        .then( data =>
+        {
+            const html = `
+                <img src="${ data.avatar }" alt="Avatar" style="width: 100px; height: 100px; border-radius: 50%;">
+                <div style="z-index: 99;">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
+                        <p><strong>Name:</strong>  ${ data.name }</p>
+                        <p><strong>Account Type:</strong>  ${ data.account_type }</p>
+                    </div>
+                    <p><strong>Company:</strong>  ${ data.company }</p>
+                    <p><strong>Website:</strong>  <a href="${ data.blog }" target="_blank">${ data.blog }</a></p>
+                    <p><strong>Location:</strong>  ${ data.location }</p>
+                    <p><strong>Email:</strong>  ${ data.email }</p>
+                    <p><strong>Bio:</strong>  ${ data.bio }</p>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr);">
+                        <p><strong>Twitter:</strong>  ${ data.twitter }</p>
+                        <p><strong>Public Repos:</strong>  ${ data.public_repos }</p>
+                        <p><strong>Public Gists:</strong>  ${ data.public_gists }</p>
+                        <p><strong>Followers:</strong>   ${ data.followers }</p>
+                        <p><strong>Following:</strong> ${ data.following }</p>
+                    </div>
+                    <p><strong>Created At:</strong>  ${ data.created_at }</p>
+                    <p><strong>Updated At:</strong>  ${ data.updated_at }</p>
+                </div>
+            `;
+                
+            document.getElementById( 'ghpreview' ).innerHTML = html;
+        } )
+        .catch( error =>
+        {
+            console.error( 'Error fetching data:', error );
+            document.getElementById( 'ghpreview' ).innerHTML = '<p>Error fetching data. Please try again later.</p>';
+        } );
+} );
+
+
+
+
+
+
+
+
+
+document.getElementById('weatherForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    let placeName = document.getElementById('weatherInput').value;
+    fetchWeather(placeName);
+});
+
+function fetchWeather ( placeName )
+{
+    let corsProxy = "https://cors-anywhere.herokuapp.com/";
+    let apiUrl = `${corsProxy}https://api.popcat.xyz/weather?q=` + encodeURIComponent(placeName);
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            displayWeather(data);
+        })
+        .catch(error => {
+            console.error('Error fetching weather data:', error);
+        });
+}
+
+function displayWeather(data) {
+    let weather = data[0];
+
+    let weatherPreview = document.getElementById('weatherpreview');
+    weatherPreview.innerHTML = `
+        <h3>${weather.location.name}</h3>
+        <p>Current Temperature: ${weather.current.temperature}°C</p>
+        <p>Condition: ${weather.current.skytext}</p>
+        <p>Humidity: ${weather.current.humidity}%</p>
+        <p>Wind: ${weather.current.winddisplay}</p>
+        <img src="${weather.current.imageUrl}" alt="Weather Icon">
+    `;
+
+    let forecast = weather.forecast;
+    let forecastHTML = '<h4>Forecast:</h4><ul>';
+    forecast.forEach(day => {
+        forecastHTML += `<li>${day.date}: ${day.skytextday}, High: ${day.high}°C, Low: ${day.low}°C</li>`;
+    });
+    forecastHTML += '</ul>';
+
+    weatherPreview.innerHTML += forecastHTML;
+}
+
+
+
+
+
+
+
+
+
+document.getElementById("searchAnythingForm").addEventListener("submit", function(event) {
+    event.preventDefault(); 
+
+    var searchQuery = document.getElementById( "searchAnythingInput" ).value.trim();
+    let corsProxy = "https://cors-anywhere.herokuapp.com/";
+
+    fetch(`${corsProxy}https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`)
+    .then(response => response.text())
+    .then(html => {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(html, 'text/html');
+        
+        var searchResults = doc.querySelectorAll('.g');
+
+        var previewDiv = document.getElementById("searchAnythingPreview");
+        previewDiv.innerHTML = "";
+
+        for (var i = 0; i < Math.min(searchResults.length, 5); i++) {
+            var result = searchResults[i];
+            var linkElement = result.querySelector('a');
+            var titleElement = result.querySelector('h3');
+            var snippetElement = result.querySelector('.s');
+
+            if (linkElement && titleElement && snippetElement) {
+                var link = linkElement.href;
+                var title = titleElement.innerText;
+                var snippet = snippetElement.innerText;
+
+                var resultDiv = document.createElement("div");
+                resultDiv.classList.add("searchResult");
+
+                var titleElement = document.createElement("h3");
+                titleElement.textContent = title;
+
+                var snippetElement = document.createElement("p");
+                snippetElement.textContent = snippet;
+
+                var linkElement = document.createElement("a");
+                linkElement.href = link;
+                linkElement.textContent = "Read More";
+
+                resultDiv.appendChild(titleElement);
+                resultDiv.appendChild(snippetElement);
+                resultDiv.appendChild(linkElement);
+
+                previewDiv.appendChild(resultDiv);
+            } else {
+                console.error("Missing elements in search result:", result);
+            }
+        }
+    })
+    .catch(error => console.error('Error fetching search results:', error));
+});
+
+
+
+
+
+
+
+

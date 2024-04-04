@@ -41,6 +41,7 @@
 
         <nav class="navbar">
             <button data-target="home" class="filter-btn">Home</button>
+            <button data-target="kabeai" class="filter-btn">Kabe AI</button>
             <button data-target="ttdl" class="filter-btn">TiktokDL</button>
             <button data-target="ytdl" class="filter-btn">YoutubeDL</button>
             <button data-target="fbdl" class="filter-btn">FacebookReelsDL</button>
@@ -49,6 +50,8 @@
             <button data-target="ttsxdl" class="filter-btn">Text To Speech</button>
             <button data-target="aidl" class="filter-btn">Conversational AI</button>
             <button data-target="imagegen" class="filter-btn">ImageGen</button>
+            <button data-target="ghprofile" class="filter-btn">Github Profile</button>
+            <button data-target="weather" class="filter-btn">Weather Search</button>
         </nav>
 
         <i class="fa-solid fa-bars" id="menu-icon"></i>
@@ -181,6 +184,54 @@
                 </form>
             </div>
         </section>
+
+        <section class="section" id="kabeai">
+            <div class="card">
+                <h2>Kabe Bot</h2>
+                <div class="messages" id="messages"></div>
+                <form id="kabeForm">
+                    <input type="text" class="kabeInput" id="kabeInput" placeholder="Ask anything..." autofocus required />
+                    <button type="submit" class="kabeAI">Ask Kabe now</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="section" id="ghprofile">
+            <div class="card">
+                <h2>Github Profile</h2>
+                <div class="ghpreview" id="ghpreview"></div>
+                <form id="ghForm">
+                    <input type="text" class="ghInput" id="ghInput" placeholder="Enter Github Username" autofocus required />
+                    <button type="submit" class="ghBtn">Search</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="section" id="weather">
+            <div class="card">
+                <h2>Weather Search</h2>
+                <div class="weatherpreview" id="weatherpreview"></div>
+                <form id="weatherForm">
+                    <input type="text" class="weatherInput" id="weatherInput" placeholder="Enter Place Name..." autofocus required />
+                    <button type="submit" class="weatherBtn">Search</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="section" id="searchAnything">
+            <div class="card">
+                <h2>Search Anything On Google</h2>
+                <div class="searchAnythingPreview" id="searchAnythingPreview"></div>
+                <form id="searchAnythingForm">
+                    <input type="text" class="ghInput" id="searchAnythingInput" placeholder="Enter Name To Search..." autofocus required />
+                    <button type="submit" class="searchAnythingBtn">Search</button>
+                </form>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; Marvin Quillo Saik | Allrights Reserved 2024</p>
+        </footer>
     </div>
      
 
@@ -190,3 +241,5 @@
     <script src="js/script.js"></script>
 </body>
 </html>
+
+
